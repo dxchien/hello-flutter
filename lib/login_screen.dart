@@ -17,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  var isHidePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   label: "Password",
                   widget: appTextField(
                       keyboardType: TextInputType.text,
-                      obscureText: true,
+                      obscureText: isHidePassword,
                       suffixIcon: Icons.remove_red_eye,
                       hintText: "Your password",
                       onTapSuffixIcon: showHidePassword)),
@@ -134,7 +136,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void showHidePassword() {
-    print('_LoginScreenState.showHidePassword');
+    setState(() {
+      this.isHidePassword = !this.isHidePassword;
+    });
   }
 
   void facebookAction() {
