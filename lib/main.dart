@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/demo_screen.dart';
-import 'package:flutter_app/layout_screen.dart';
-import 'package:flutter_app/login_screen.dart';
+import 'package:flutter_app/inbox_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(title: 'Flutter Demo'),
+      home: InboxScreen(title: 'Hello Flutter'),
     );
   }
 }
