@@ -103,7 +103,7 @@ class _InboxScreenState extends State<InboxScreen> {
                   content,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: isUnSeen ? Colors.black87 : Colors.black26,
+                    color: isUnSeen ? Colors.black87 : Colors.black38,
                   ),
                 ),
               ],
@@ -116,7 +116,7 @@ class _InboxScreenState extends State<InboxScreen> {
                 date,
                 style: TextStyle(
                   fontSize: 10,
-                  color: isUnSeen ? Colors.black87 : Colors.black26,
+                  color: Colors.black38,
                 ),
               ),
               if (isUnSeen) ...[
