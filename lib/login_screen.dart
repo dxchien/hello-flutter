@@ -3,7 +3,7 @@ import 'package:flutter_app/utils/app_button.dart';
 import 'package:flutter_app/utils/app_rich_text.dart';
 import 'package:flutter_app/utils/app_input_group.dart';
 import 'package:flutter_app/utils/app_text_divider.dart';
-import 'package:flutter_app/utils/app_textbtn.dart';
+import 'package:flutter_app/utils/app_text_btn.dart';
 import 'package:flutter_app/utils/app_text_field.dart';
 import 'package:flutter_app/utils/system.dart';
 
