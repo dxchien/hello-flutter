@@ -11,6 +11,10 @@ class InboxScreen extends StatefulWidget {
 }
 
 class _InboxScreenState extends State<InboxScreen> {
+  final _controller = ScrollController();
+  var btnLocation = FloatingActionButtonLocation.centerFloat;
+  bool isExtended = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +29,35 @@ class _InboxScreenState extends State<InboxScreen> {
         },
         icon: const Icon(Icons.add),
         label: Text("Tạo tin nhắn mới"),
+        isExtended: isExtended,
         backgroundColor: Color(0xff2f6bff),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: btnLocation,
     );
+  }
+
+  @override
+  void initState() {
+    _controller.addListener(scrollListener);
+    super.initState();
+  }
+
+  void scrollListener() {
+    if (btnLocation == FloatingActionButtonLocation.centerFloat &&
+        _controller.offset > 20) {
+      setState(() {
+        isExtended = false;
+        btnLocation = FloatingActionButtonLocation.endFloat;
+      });
+    }
+
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        isExtended = true;
+        btnLocation = FloatingActionButtonLocation.centerFloat;
+      });
+    }
   }
 
   Widget buildBody() {
@@ -38,6 +67,7 @@ class _InboxScreenState extends State<InboxScreen> {
   Widget buildList() {
     return Container(
       child: ListView(
+        controller: _controller,
         children: [
           buildItem(
             header: "Thông báo",
@@ -53,6 +83,41 @@ class _InboxScreenState extends State<InboxScreen> {
             icon: Icons.card_giftcard,
             color: Color(0xff0ab63c),
           ),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
           buildItem(
               header: "Tin tức",
               content: "Cập nhật các tính năng mới nhất của VinID",
@@ -136,5 +201,9 @@ class _InboxScreenState extends State<InboxScreen> {
 
   void createMessenger() {
     print('_InboxScreenState.createMessenger');
+  }
+
+  void onDragDown() {
+    print('_InboxScreenState.onDragDown');
   }
 }
