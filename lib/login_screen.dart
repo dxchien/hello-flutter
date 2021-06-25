@@ -53,13 +53,13 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 32),
               appInputGroup(
                   label: "Email",
-                  wg: appTextField(
+                  widget: appTextField(
                       keyboardType: TextInputType.emailAddress,
                       hintText: "Your email or phone")),
               const SizedBox(height: 12),
               appInputGroup(
                   label: "Password",
-                  wg: appTextField(
+                  widget: appTextField(
                       keyboardType: TextInputType.text,
                       obscureText: true,
                       suffixIcon: Icons.remove_red_eye,

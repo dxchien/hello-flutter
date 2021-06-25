@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app_text_field.dart';
-
-Widget appInputGroup({String? label, required Widget wg}) {
+Widget appInputGroup({String? label, required Widget widget}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -16,7 +14,7 @@ Widget appInputGroup({String? label, required Widget wg}) {
       const SizedBox(
         height: 12,
       ),
-      wg,
+      widget,
     ],
   );
 }
