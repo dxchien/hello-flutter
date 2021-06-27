@@ -4,8 +4,9 @@ const mainPurple = Color(0xFF554BB3);
 const mainPink = Color(0xFFF52D56);
 const mainBackground = Color(0xFFF0F2F5);
 
-const inputBorder = Color(0xFFE0E0E0);
-const greyText = Color(0xFF565656);
+const inputBorder = Color(0xFFe6e7e8);
+const greyText = Color(0xFF25303e);
+const textButton = Color(0xff3f69f6);
 
 Color hexToColor(String code, {Color? fallBackColor}) {
 	if (code.isEmpty) {

@@ -43,19 +43,18 @@ class _InboxScreenState extends State<InboxScreen> {
   }
 
   void scrollListener() {
-    if (btnLocation == FloatingActionButtonLocation.centerFloat &&
-        _controller.offset > 20) {
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      if (btnLocation == FloatingActionButtonLocation.endFloat) {
+        setState(() {
+          isExtended = true;
+          btnLocation = FloatingActionButtonLocation.centerFloat;
+        });
+      }
+    } else if (btnLocation == FloatingActionButtonLocation.centerFloat) {
       setState(() {
         isExtended = false;
         btnLocation = FloatingActionButtonLocation.endFloat;
-      });
-    }
-
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
-      setState(() {
-        isExtended = true;
-        btnLocation = FloatingActionButtonLocation.centerFloat;
       });
     }
   }
@@ -83,6 +82,41 @@ class _InboxScreenState extends State<InboxScreen> {
             icon: Icons.card_giftcard,
             color: Color(0xff0ab63c),
           ),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
+          buildItem(
+              header: "Tin tức",
+              content: "Cập nhật các tính năng mới nhất của VinID",
+              icon: Icons.speaker,
+              color: Color(0xff1f6eff)),
           buildItem(
               header: "Tin tức",
               content: "Cập nhật các tính năng mới nhất của VinID",
