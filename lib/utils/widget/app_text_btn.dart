@@ -12,7 +12,7 @@ Widget appTextButton({
       text,
       style: TextStyle(
         fontSize: fontSize,
-        color: textButton,
+        color: textLink,
       ),
     ),
   );

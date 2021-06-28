@@ -5,8 +5,10 @@ const mainPink = Color(0xFFF52D56);
 const mainBackground = Color(0xFFF0F2F5);
 
 const inputBorder = Color(0xFFe6e7e8);
-const greyText = Color(0xFF25303e);
-const textButton = Color(0xff3f69f6);
+const textGrey = Color(0xFF25303e);
+const textHint = Color(0xFF81878f);
+const textLink = Color(0xff3f69f6);
+
 
 Color hexToColor(String code, {Color? fallBackColor}) {
 	if (code.isEmpty) {
