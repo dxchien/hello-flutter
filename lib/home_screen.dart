@@ -2,27 +2,31 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/navigator.dart';
 import 'package:flutter_app/utils/entity/fomo_menu.dart';
 import 'package:flutter_app/utils/entity/hot_menu.dart';
 import 'package:flutter_app/utils/service/home_service.dart';
 import 'package:flutter_app/utils/formatter.dart';
 import 'package:flutter_app/utils/entity/main_menu.dart';
-import 'package:flutter_app/utils/widget/app_text_heading.dart';
-import 'package:flutter_app/utils/widget/app_text_link.dart';
+import 'package:flutter_app/wallet_screen.dart';
+import 'package:flutter_app/widget/app_text_heading.dart';
+import 'package:flutter_app/widget/app_text_link.dart';
 
 import 'utils/color.dart';
 import 'utils/system.dart';
 
-class HomeScreen extends StatefulWidget {
-  final String title;
+typedef void MyCallBack(BuildContext context);
 
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -70,7 +74,7 @@ Widget buildBody(BuildContext context) {
               child: Column(
                 children: [
                   SizedBox(height: 20),
-                  buildWallet(),
+                  buildWallet(context),
                   SizedBox(height: 20),
                   buildMainMenu(),
                   SizedBox(height: 30),
@@ -129,7 +133,7 @@ Widget buildHotMenuItem(
     onTap: dummyAction,
     child: Container(
       decoration: BoxDecoration(
-        border: Border.all(color: inputBorder),
+        border: Border.all(color: colorBorder),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
@@ -140,7 +144,7 @@ Widget buildHotMenuItem(
             borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
             child: Container(
               decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: inputBorder)),
+                border: Border(bottom: BorderSide(color: colorBorder)),
               ),
               child: Image.asset("assets/${ett.image}"),
             ),
@@ -193,7 +197,7 @@ Widget buildFomoMenuItem(
     onTap: dummyAction,
     child: Container(
       decoration: BoxDecoration(
-        border: Border.all(color: inputBorder),
+        border: Border.all(color: colorBorder),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
@@ -202,7 +206,7 @@ Widget buildFomoMenuItem(
             borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
             child: Container(
               decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: inputBorder)),
+                border: Border(bottom: BorderSide(color: colorBorder)),
               ),
               child: Image.asset("assets/${ett.image}"),
             ),
@@ -280,7 +284,6 @@ Widget buildMainMenu() {
         shrinkWrap: true,
         primary: false,
       ),
-      SizedBox(height: 10),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -339,26 +342,28 @@ Widget buildMainMenuItem(List<MainMenu> listMenu, int index) {
   );
 }
 
-Widget buildWallet() {
+Widget buildWallet(BuildContext context) {
   return Row(
     children: [
       Expanded(
         child: wallet(
+          context: context,
           prefixIcon: Icons.verified,
           suffixIcon: Icons.chevron_right,
           title: "Điểm tích luỹ",
           balance: formatInt(5300),
-          action: accumulatedPointsAction,
+          callBack: walletAction,
         ),
       ),
       SizedBox(width: 10),
       Expanded(
         child: wallet(
+          context: context,
           suffixIcon: Icons.add,
           prefixIcon: Icons.account_balance_wallet,
           title: "Ví của tôi",
           balance: formatCurrency(0),
-          action: accumulatedPointsAction,
+          callBack: walletAction,
         ),
       )
     ],
@@ -370,20 +375,24 @@ Widget wallet({
   required IconData suffixIcon,
   required String title,
   required String balance,
-  required VoidCallback action,
+  required BuildContext context,
+  required MyCallBack callBack,
 }) {
   return GestureDetector(
+    onTap: () {
+      walletAction(context);
+    },
     child: Container(
       height: 64,
       decoration: BoxDecoration(
-        border: Border.all(color: inputBorder),
+        border: Border.all(color: colorBorder),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Row(
         children: [
           Container(
               padding: EdgeInsets.all(10),
-              child: Icon(prefixIcon, color: textLink)),
+              child: Icon(prefixIcon, color: colorLink)),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -393,14 +402,15 @@ Widget wallet({
                   padding: EdgeInsets.symmetric(vertical: 4),
                   child: Text(
                     title,
-                    style: TextStyle(color: textHint),
+                    style: TextStyle(color: colorHint),
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 4),
                   child: Text(
                     balance,
-                    style: TextStyle(color: textGrey, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        color: colorGrey, fontWeight: FontWeight.w500),
                   ),
                 ),
               ],
@@ -408,7 +418,7 @@ Widget wallet({
           ),
           Container(
               padding: EdgeInsets.all(2),
-              child: Icon(suffixIcon, color: textLink)),
+              child: Icon(suffixIcon, color: colorLink)),
         ],
       ),
     ),
@@ -457,14 +467,14 @@ Widget buildSearchArea() {
             decoration: InputDecoration(
               fillColor: Colors.white,
               filled: true,
-              prefixIcon: Icon(Icons.search, color: textGrey),
+              prefixIcon: Icon(Icons.search, color: colorGrey),
               hintText: "Bạn đang muốn tìm ...",
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: inputBorder),
+                borderSide: BorderSide(color: colorBorder),
                 borderRadius: BorderRadius.circular(50),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: inputBorder),
+                borderSide: BorderSide(color: colorBorder),
                 borderRadius: BorderRadius.circular(50),
               ),
               contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
@@ -479,11 +489,11 @@ Widget buildSearchArea() {
             onPressed: giftButtonAction,
             child: Icon(
               Icons.card_giftcard,
-              color: textGrey,
+              color: colorGrey,
             ),
             style: ElevatedButton.styleFrom(
               shape: CircleBorder(
-                side: BorderSide(color: inputBorder),
+                side: BorderSide(color: colorBorder),
               ),
               padding: EdgeInsets.all(0),
               primary: Colors.white,
@@ -521,6 +531,10 @@ void getNowAction() {
 
 void accumulatedPointsAction() {
   print('accumulatedPointsAction');
+}
+
+void walletAction(BuildContext context) {
+  navigatorPush(context, WalletScreen());
 }
 
 void allServiceAction() {

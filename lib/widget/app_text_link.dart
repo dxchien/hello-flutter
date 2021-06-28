@@ -13,7 +13,7 @@ Widget appTextLink({
       text,
       style: TextStyle(
         fontSize: fontSize,
-        color: textLink,
+        color: colorLink,
       ),
     ),
   );

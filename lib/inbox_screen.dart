@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/utils/widget/app_bar.dart';
+import 'package:flutter_app/widget/app_bar.dart';
 
 class InboxScreen extends StatefulWidget {
-  final String title;
-
-  const InboxScreen({Key? key, required this.title}) : super(key: key);
+  const InboxScreen({Key? key}) : super(key: key);
 
   @override
   _InboxScreenState createState() => _InboxScreenState();

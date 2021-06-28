@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/utils/color.dart';
 
-import '../color.dart';
 
 Widget appTextField({
   TextEditingController? controller,
@@ -24,7 +24,7 @@ Widget appTextField({
       decoration: InputDecoration(
         hintText: hintText,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: inputBorder),
+          borderSide: BorderSide(color: colorBorder),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: mainPurple),

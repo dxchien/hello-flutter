@@ -4,10 +4,11 @@ const mainPurple = Color(0xFF554BB3);
 const mainPink = Color(0xFFF52D56);
 const mainBackground = Color(0xFFF0F2F5);
 
-const inputBorder = Color(0xFFe6e7e8);
-const textGrey = Color(0xFF25303e);
-const textHint = Color(0xFF81878f);
-const textLink = Color(0xff3f69f6);
+const colorBorder = Color(0xFFe6e7e8);
+const colorGrey = Color(0xFF25303e);
+const colorHint = Color(0xFF81878f);
+const colorLink = Color(0xff3f69f6);
+const colorTabSelected = Color(0xffca382f);
 
 
 Color hexToColor(String code, {Color? fallBackColor}) {

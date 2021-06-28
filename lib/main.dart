@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/home_screen.dart';
+import 'package:flutter_app/stack_screen.dart';
 import 'package:flutter_app/utils/color.dart';
 
 void main() {
@@ -13,13 +13,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: new ThemeData(
-        primaryColor: textGrey,
+        primaryColor: colorGrey,
         textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: textGrey,
-              displayColor: textGrey,
+              bodyColor: colorGrey,
+              displayColor: colorGrey,
             ),
       ),
-      home: HomeScreen(title: 'Hello Flutter'),
+      home: StackScreen(),
     );
   }
 }
