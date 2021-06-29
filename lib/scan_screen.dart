@@ -14,7 +14,11 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context: context, title: "Scan"),
+      appBar: appBar(
+        context: context,
+        title: "Scan",
+        isBack: false,
+      ),
       body: Center(
         child: FaIcon(
           FontAwesomeIcons.barcode,

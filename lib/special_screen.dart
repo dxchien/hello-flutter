@@ -14,7 +14,11 @@ class _SpecialScreeenState extends State<SpecialScreeen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context: context, title: "Đặc quyền"),
+      appBar: appBar(
+        context: context,
+        title: "Đặc quyền",
+        isBack: false,
+      ),
       body: Center(
         child: FaIcon(
           FontAwesomeIcons.chessQueen,

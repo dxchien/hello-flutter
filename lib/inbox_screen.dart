@@ -19,6 +19,7 @@ class _InboxScreenState extends State<InboxScreen> {
       appBar: appBar(
         context: context,
         title: "Hộp thư",
+        isBack: false,
       ),
       body: buildBody(),
       floatingActionButton: FloatingActionButton.extended(

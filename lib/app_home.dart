@@ -74,7 +74,6 @@ class _StackScreenState extends State<StackScreen> {
       ),
       body: PageView(
         children: tabPages,
-        onPageChanged: onPageChanged,
         controller: _pageController,
       ),
     );
@@ -87,7 +86,10 @@ class _StackScreenState extends State<StackScreen> {
   }
 
   void onTabTapped(int index) {
-    this._pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+    this._pageController.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
   }
 }

@@ -108,6 +108,7 @@ Widget buildHotMenu(BuildContext context) {
         ),
         SizedBox(height: 10),
         GridView.builder(
+          padding: EdgeInsets.zero,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: itemWidth / itemHeight,
@@ -172,6 +173,7 @@ Widget buildFomoMenu(BuildContext context) {
         appTextHeading("Đừng bỏ lỡ"),
         SizedBox(height: 10),
         GridView.builder(
+          padding: EdgeInsets.zero,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: itemWidth / itemHeight,
@@ -271,6 +273,7 @@ Widget buildMainMenu() {
   return Column(
     children: [
       GridView.builder(
+        padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
           childAspectRatio: 0.9,

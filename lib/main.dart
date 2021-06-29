@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/stack_screen.dart';
+import 'package:flutter_app/app_home.dart';
 import 'package:flutter_app/utils/color.dart';
 
 void main() {
