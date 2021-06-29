@@ -39,6 +39,12 @@ class _StackScreenState extends State<StackScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: PageView(
+        children: tabPages,
+        onPageChanged: onPageChanged,
+        controller: _pageController,
+        physics: new NeverScrollableScrollPhysics(),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         selectedFontSize: 12,
@@ -71,10 +77,6 @@ class _StackScreenState extends State<StackScreen> {
             label: "Tài khoản",
           ),
         ],
-      ),
-      body: PageView(
-        children: tabPages,
-        controller: _pageController,
       ),
     );
   }

@@ -480,7 +480,7 @@ Widget buildSearchArea() {
                 borderSide: BorderSide(color: colorBorder),
                 borderRadius: BorderRadius.circular(50),
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10),
             ),
           ),
         ),
