@@ -29,37 +29,42 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => hideKeyboard(),
-      behavior: HitTestBehavior.translucent,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: buildBody(context),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          Positioned(top: 0, left: 0, child: topDecor(context)),
+          Positioned(child: buildBody(context))
+        ],
       ),
     );
   }
 }
 
+Widget topDecor(BuildContext context) {
+  return Container(
+    width: getScreenWidth(context),
+    height: getScreenHeight(context),
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment(0, -0.5),
+          colors: [
+            Color(0xfff9def1),
+            Colors.white,
+          ]),
+    ),
+  );
+}
+
 Widget buildBody(BuildContext context) {
-  return SafeArea(
-    child: Container(
-      width: double.infinity,
-      child: SingleChildScrollView(
+  return SingleChildScrollView(
+    child: SafeArea(
+      child: Container(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: double.infinity,
               padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xfff9def1),
-                      Colors.white,
-                    ]),
-              ),
               child: Column(
                 children: [
                   buildSearchArea(),
@@ -69,7 +74,6 @@ Widget buildBody(BuildContext context) {
               ),
             ),
             Container(
-              color: Colors.white,
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
@@ -83,7 +87,7 @@ Widget buildBody(BuildContext context) {
                   buildHotMenu(context),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -91,254 +95,81 @@ Widget buildBody(BuildContext context) {
   );
 }
 
-Widget buildHotMenu(BuildContext context) {
-  List<HotMenu> listMenu = getHotMenus();
-  final double itemWidth = (getScreenWidth(context) - 42) / 2;
-  final double itemHeight = itemWidth / 2 + 60;
-
+Widget buildSearchArea() {
   return Container(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    color: Colors.transparent,
+    child: Row(
       children: [
-        Row(
-          children: [
-            Expanded(child: appTextHeading("VinID có gì hot?")),
-            appTextLink(text: "Tất cả", action: dummyAction)
-          ],
-        ),
-        SizedBox(height: 10),
-        GridView.builder(
-          padding: EdgeInsets.zero,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: itemWidth / itemHeight,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
+        Expanded(
+          child: TextField(
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
+            inputFormatters: [LengthLimitingTextInputFormatter(100)],
+            decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              prefixIcon: Icon(Icons.search, color: colorGrey),
+              hintText: "Bạn đang muốn tìm ...",
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: colorBorder),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: colorBorder),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+            ),
           ),
-          itemBuilder: (ctx, index) {
-            return buildHotMenuItem(ctx, listMenu, index);
-          },
-          itemCount: listMenu.length,
-          shrinkWrap: true,
-          primary: false,
         ),
+        SizedBox(width: 6),
+        Container(
+          width: 46,
+          height: 46,
+          child: ElevatedButton(
+            onPressed: giftButtonAction,
+            child: Icon(
+              Icons.card_giftcard,
+              color: colorGrey,
+            ),
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(
+                side: BorderSide(color: colorBorder),
+              ),
+              padding: EdgeInsets.all(0),
+              primary: Colors.white,
+              shadowColor: Colors.transparent,
+            ),
+          ),
+        )
       ],
     ),
   );
 }
 
-Widget buildHotMenuItem(
-    BuildContext context, List<HotMenu> listMenu, int index) {
-  HotMenu ett = listMenu[index];
-  return GestureDetector(
-    onTap: dummyAction,
-    child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: colorBorder),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: colorBorder)),
-              ),
-              child: Image.asset("assets/${ett.image}"),
-            ),
-          ),
-          Container(
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-              child: Text(
-                ett.name,
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-              ))
-        ],
-      ),
-    ),
-  );
-}
-
-Widget buildFomoMenu(BuildContext context) {
-  List<FomoMenu> listMenu = getFomoMenus();
-  final double itemWidth = (getScreenWidth(context) - 42) / 2;
-  final double itemHeight = itemWidth + 65;
+Widget buildTopAd() {
   return Container(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    height: 100,
+    child: Row(
       children: [
-        appTextHeading("Đừng bỏ lỡ"),
-        SizedBox(height: 10),
-        GridView.builder(
-          padding: EdgeInsets.zero,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: itemWidth / itemHeight,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-          ),
-          itemBuilder: (ctx, index) {
-            return buildFomoMenuItem(ctx, listMenu, index);
-          },
-          itemCount: listMenu.length,
-          shrinkWrap: true,
-          primary: false,
-        ),
-      ],
-    ),
-  );
-}
-
-Widget buildFomoMenuItem(
-    BuildContext context, List<FomoMenu> listMenu, int index) {
-  FomoMenu ett = listMenu[index];
-  return GestureDetector(
-    onTap: dummyAction,
-    child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: colorBorder),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: colorBorder)),
-              ),
-              child: Image.asset("assets/${ett.image}"),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(right: 18),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  ett.name,
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      width: 18,
-                      height: 18,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                              colors: [
-                                Color(0xffdc5752),
-                                Color(0xffb43a33),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter)),
-                      child: CircleAvatar(
-                        child: Icon(
-                          ett.btnIcon,
-                          color: Colors.white,
-                          size: 12,
-                        ),
-                        backgroundColor: Colors.transparent,
-                      ),
-                    ),
-                    SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        ett.btnText,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Color(0xff3c5483),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                appTextHeading("Giảm tới 40% Trà vải tươi dầm Phúc Long"),
+                Container(
+                  height: 36,
+                  child: appTextLink(text: "Nhận ngay", action: getNowAction),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    ),
-  );
-}
-
-Widget buildMainMenu() {
-  List<MainMenu> listMenu = getMainMenus();
-  return Column(
-    children: [
-      GridView.builder(
-        padding: EdgeInsets.zero,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          childAspectRatio: 0.9,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
-        ),
-        itemBuilder: (ctx, index) {
-          return buildMainMenuItem(listMenu, index);
-        },
-        itemCount: listMenu.length,
-        shrinkWrap: true,
-        primary: false,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          appTextLink(text: "Xem tất cả dịch vụ", action: allServiceAction),
-          SizedBox(width: 8),
-          Badge(
-            toAnimate: false,
-            shape: BadgeShape.square,
-            badgeColor: Colors.red,
-            borderRadius: BorderRadius.circular(100),
-            badgeContent: Text(' +2 ', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
-    ],
-  );
-}
-
-Widget buildMainMenuItem(List<MainMenu> listMenu, int index) {
-  MainMenu ett = listMenu[index];
-  return Container(
-    child: Column(
-      children: [
-        Container(
-          width: 48,
-          height: 48,
-          child: Stack(
-            children: [
-              Container(
-                padding: EdgeInsets.all(4),
-                child: Image.asset("assets/${ett.image}"),
-              ),
-              if (ett.isHot) ...[
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    height: 16,
-                    child: Image.asset(
-                      "assets/ic_function_hot.png",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ]
-            ],
           ),
         ),
-        SizedBox(height: 2),
-        Text(
-          ett.name,
-          textAlign: TextAlign.center,
+        Image.asset(
+          "assets/phuclong.png",
+          fit: BoxFit.fill,
         ),
       ],
     ),
@@ -428,98 +259,262 @@ Widget wallet({
   );
 }
 
-Widget buildTopAd() {
+Widget buildMainMenu() {
+  List<MainMenu> listMenu = getMainMenus();
+  return Column(
+    children: [
+      GridView.builder(
+        padding: EdgeInsets.zero,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          childAspectRatio: 0.9,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+        ),
+        itemBuilder: (ctx, index) {
+          return buildMainMenuItem(listMenu, index);
+        },
+        itemCount: listMenu.length,
+        shrinkWrap: true,
+        primary: false,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          appTextLink(text: "Xem tất cả dịch vụ", action: allServiceAction),
+          SizedBox(width: 8),
+          Badge(
+            toAnimate: false,
+            shape: BadgeShape.square,
+            badgeColor: Colors.red,
+            borderRadius: BorderRadius.circular(100),
+            badgeContent: Text(' +2 ', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+Widget buildFomoMenu(BuildContext context) {
+  List<FomoMenu> listMenu = getFomoMenus();
+  final double itemWidth = (getScreenWidth(context) - 42) / 2;
+  final double itemHeight = itemWidth + 65;
   return Container(
-    height: 100,
-    child: Row(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: Container(
-            margin: EdgeInsets.only(right: 18),
+        appTextHeading("Đừng bỏ lỡ"),
+        SizedBox(height: 10),
+        GridView.builder(
+          padding: EdgeInsets.zero,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: itemWidth / itemHeight,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+          ),
+          itemBuilder: (ctx, index) {
+            return buildFomoMenuItem(ctx, listMenu, index);
+          },
+          itemCount: listMenu.length,
+          shrinkWrap: true,
+          primary: false,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildFomoMenuItem(
+  BuildContext context,
+  List<FomoMenu> listMenu,
+  int index,
+) {
+  FomoMenu ett = listMenu[index];
+  return GestureDetector(
+    onTap: dummyAction,
+    child: Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: colorBorder),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: colorBorder)),
+              ),
+              child: Image.asset("assets/${ett.image}"),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                appTextHeading("Giảm tới 40% Trà vải tươi dầm Phúc Long"),
-                Container(
-                  height: 36,
-                  child: appTextLink(text: "Nhận ngay", action: getNowAction),
-                )
+                Text(
+                  ett.name,
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Container(
+                      width: 18,
+                      height: 18,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                              colors: [
+                                Color(0xffdc5752),
+                                Color(0xffb43a33),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter)),
+                      child: CircleAvatar(
+                        child: Icon(
+                          ett.btnIcon,
+                          color: Colors.white,
+                          size: 12,
+                        ),
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        ett.btnText,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff3c5483),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
-          ),
-        ),
-        Image.asset(
-          "assets/phuclong.png",
-          fit: BoxFit.fill,
-        ),
-      ],
+          )
+        ],
+      ),
     ),
   );
 }
 
-Widget buildSearchArea() {
+Widget buildMainMenuItem(List<MainMenu> listMenu, int index) {
+  MainMenu ett = listMenu[index];
   return Container(
-    height: 46,
-    child: Row(
+    child: Column(
       children: [
-        Expanded(
-          child: TextField(
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
-            inputFormatters: [LengthLimitingTextInputFormatter(100)],
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              prefixIcon: Icon(Icons.search, color: colorGrey),
-              hintText: "Bạn đang muốn tìm ...",
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: colorBorder),
-                borderRadius: BorderRadius.circular(50),
+        Container(
+          width: 48,
+          height: 48,
+          child: Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.all(4),
+                child: Image.asset("assets/${ett.image}"),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: colorBorder),
-                borderRadius: BorderRadius.circular(50),
-              ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            ),
+              if (ett.isHot) ...[
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    height: 16,
+                    child: Image.asset(
+                      "assets/ic_function_hot.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ]
+            ],
           ),
         ),
-        SizedBox(width: 6),
-        Container(
-          width: 46,
-          height: 46,
-          child: ElevatedButton(
-            onPressed: giftButtonAction,
-            child: Icon(
-              Icons.card_giftcard,
-              color: colorGrey,
-            ),
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(
-                side: BorderSide(color: colorBorder),
-              ),
-              padding: EdgeInsets.all(0),
-              primary: Colors.white,
-              shadowColor: Colors.transparent,
-            ),
-          ),
-        )
+        SizedBox(height: 2),
+        Text(
+          ett.name,
+          textAlign: TextAlign.center,
+        ),
       ],
     ),
   );
 }
 
-Widget topDecor() {
+Widget buildHotMenu(BuildContext context) {
+  List<HotMenu> listMenu = getHotMenus();
+  final double itemWidth = (getScreenWidth(context) - 42) / 2;
+  final double itemHeight = itemWidth / 2 + 60;
+
   return Container(
-    width: double.infinity,
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment(0, -0.5),
-          colors: [
-            Color(0xfff9def1),
-            Colors.white,
-          ]),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(child: appTextHeading("VinID có gì hot?")),
+            appTextLink(text: "Tất cả", action: dummyAction)
+          ],
+        ),
+        SizedBox(height: 10),
+        GridView.builder(
+          padding: EdgeInsets.zero,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: itemWidth / itemHeight,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+          ),
+          itemBuilder: (ctx, index) {
+            return buildHotMenuItem(ctx, listMenu, index);
+          },
+          itemCount: listMenu.length,
+          shrinkWrap: true,
+          primary: false,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildHotMenuItem(
+  BuildContext context,
+  List<HotMenu> listMenu,
+  int index,
+) {
+  HotMenu ett = listMenu[index];
+  return GestureDetector(
+    onTap: dummyAction,
+    child: Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: colorBorder),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: colorBorder)),
+              ),
+              child: Image.asset("assets/${ett.image}"),
+            ),
+          ),
+          Container(
+              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+              child: Text(
+                ett.name,
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+              ))
+        ],
+      ),
     ),
   );
 }
