@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'transitions/fade_route.dart';
-import 'transitions/slide_route.dart';
+import '../transitions/fade_route.dart';
+import '../transitions/slide_route.dart';
 
 void navigatorPush(BuildContext context, Widget screen) {
   if (Platform.isIOS) {

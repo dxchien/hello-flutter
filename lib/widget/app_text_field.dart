@@ -5,24 +5,24 @@ import 'package:flutter_app/utils/color.dart';
 
 Widget appTextField({
   TextEditingController? controller,
-  required TextInputType keyboardType,
+  TextInputType keyboardType = TextInputType.text,
   bool obscureText = false,
   String? hintText,
   IconData? suffixIcon,
   VoidCallback? onTapSuffixIcon,
 }) {
   return Container(
-    height: 64,
+    height: 48,
     child: TextField(
       controller: controller,
       autocorrect: false,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: keyboardType,
       textCapitalization: TextCapitalization.words,
       inputFormatters: [LengthLimitingTextInputFormatter(100)],
-      style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
+        contentPadding: EdgeInsets.all(10),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: colorBorder),
         ),
