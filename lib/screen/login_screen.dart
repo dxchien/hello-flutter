@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widget/app_button.dart';
-import 'package:flutter_app/widget/app_rich_text.dart';
-import 'package:flutter_app/widget/app_input_group.dart';
-import 'package:flutter_app/widget/app_text_divider.dart';
-import 'package:flutter_app/widget/app_text_btn.dart';
-import 'package:flutter_app/widget/app_text_field.dart';
 import 'package:flutter_app/utils/system.dart';
+import 'package:flutter_app/widget/app_button.dart';
+import 'package:flutter_app/widget/app_input_group.dart';
+import 'package:flutter_app/widget/app_rich_text.dart';
+import 'package:flutter_app/widget/app_text_btn.dart';
+import 'package:flutter_app/widget/app_text_divider.dart';
+import 'package:flutter_app/widget/app_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   final String title;

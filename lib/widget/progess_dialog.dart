@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'dialog/dialog_manager.dart';
 
 class ProgressDialog {

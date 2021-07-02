@@ -3,8 +3,8 @@ import 'package:flutter_app/screen/home/home_screen.dart';
 import 'package:flutter_app/screen/inbox_screen.dart';
 import 'package:flutter_app/screen/profile_screen.dart';
 import 'package:flutter_app/screen/scan_screen.dart';
-import 'package:flutter_app/service/home_service.dart';
 import 'package:flutter_app/screen/special_screen.dart';
+import 'package:flutter_app/service/home_service.dart';
 import 'package:flutter_app/utils/color.dart';
 
 class StackScreen extends StatefulWidget {

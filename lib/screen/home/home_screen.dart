@@ -4,6 +4,7 @@ import 'package:flutter_app/screen/home/main_menu.dart';
 import 'package:flutter_app/screen/home/search_area.dart';
 import 'package:flutter_app/screen/home/top_ad.dart';
 import 'package:flutter_app/screen/home/wallet_area.dart';
+
 import '../../utils/system.dart';
 import 'fomoMenu.dart';
 import 'hot_menu.dart';
